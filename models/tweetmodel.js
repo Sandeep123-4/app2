@@ -7,8 +7,8 @@ const tweet_schema = mongoose.Schema({
    tweet:{
     type:String,
     require:true,
-    minlength:10,
-    maxlength:1000,
+    minlength:1,
+    maxlength:10000,
    },
    username:{
     type:String,

@@ -114,7 +114,7 @@ app.post("/tweets",verifytoken,async(req , res)=>{
 
     const tweets = new tweetmodel({tweet , username})
     await tweets.save()
-    return res.redirect("/tweet")
+    return res.redirect("/dashboard")
 })
 
 
