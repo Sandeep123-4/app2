@@ -49,7 +49,7 @@
 
         .navbar {
             width: 100%;
-            padding: 15px 30px;
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -60,10 +60,12 @@
             top: 0;
             z-index: 100;
             transition: all 0.3s ease;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .navbar-title {
-            font-size: 24px;
+            font-size: clamp(20px, 4vw, 24px);
             font-weight: bold;
             background: linear-gradient(45deg, #5c67f2, #4a54e1);
             -webkit-background-clip: text;
@@ -81,18 +83,24 @@
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 30px;
+            gap: 15px;
             margin-right: auto;
-            margin-left: 50px;
+            margin-left: 20px;
+            flex-wrap: wrap;
         }
 
         .nav-links a {
             color: var(--text-color);
             text-decoration: none;
-            font-size: 16px;
-            padding: 8px 15px;
+            font-size: clamp(14px, 2vw, 16px);
+            padding: 8px 12px;
             border-radius: 8px;
             transition: background 0.3s;
+            white-space: nowrap;
+        }
+
+        .nav-links a i {
+            margin-right: 5px;
         }
 
         .nav-links a:hover {
@@ -100,7 +108,10 @@
         }
 
         .search-form {
-            margin-right: 20px;
+            margin-right: 10px;
+            flex: 1;
+            min-width: 200px;
+            max-width: 400px;
         }
 
         .search-form input {
@@ -110,25 +121,20 @@
             background: var(--search-bg);
             color: var(--text-color);
             font-size: 14px;
-            width: 250px;
-            transition: width 0.3s ease;
+            width: 100%;
+            transition: all 0.3s ease;
         }
 
         .search-form input::placeholder {
             color: var(--search-placeholder);
         }
 
-        .search-form input:focus {
-            outline: none;
-            width: 400px;
-        }
-
         .user-section {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
             cursor: pointer;
-            padding: 8px 15px;
+            padding: 8px 12px;
             border-radius: 50px;
             transition: background 0.3s;
         }
@@ -138,26 +144,34 @@
         }
 
         .user-avatar {
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             background: var(--hover-bg);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
 
         .user-info {
             text-align: right;
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .user-info {
+                display: block;
+            }
         }
 
         .user-info h2 {
-            font-size: 16px;
+            font-size: clamp(14px, 2vw, 16px);
             margin-bottom: 2px;
         }
 
         .user-info p {
-            font-size: 12px;
+            font-size: clamp(11px, 1.5vw, 12px);
             opacity: 0.8;
         }
 
@@ -165,7 +179,7 @@
             position: fixed;
             right: -300px;
             top: 0;
-            width: 300px;
+            width: min(300px, 80vw);
             height: 100vh;
             background: var(--sidebar-bg);
             backdrop-filter: blur(10px);
@@ -173,6 +187,7 @@
             transition: right 0.3s ease;
             z-index: 1000;
             box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+            overflow-y: auto;
         }
 
         .sidebar.active {
@@ -216,6 +231,7 @@
             padding: 10px;
             border-radius: 8px;
             transition: background 0.3s;
+            font-size: clamp(14px, 2vw, 16px);
         }
 
         .sidebar-menu a:hover {
@@ -223,9 +239,9 @@
         }
 
         .main-content {
-            width: 100%;
+            width: 95%;
             margin: 20px auto;
-            padding: 20px;
+            padding: 15px;
             background: var(--content-bg);
             backdrop-filter: blur(20px);
             border-radius: 15px;
@@ -233,16 +249,19 @@
             flex-grow: 1;
             overflow-y: auto;
         }
+
         .tweetscontainer {
             max-width: 800px;
+            width: 100%;
             margin: 20px auto;
+            padding: 0 10px;
         }
 
         .tweet {
             background: var(--navbar-bg);
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             box-shadow: 0 2px 5px rgba(246, 245, 245, 0.1);
         }
 
@@ -251,15 +270,18 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 5px;
         }
 
         .tweet-username {
             font-weight: bold;
             color: var(--text-color);
+            font-size: clamp(14px, 2vw, 16px);
         }
 
         .tweet-timestamp {
-            font-size: 0.8em;
+            font-size: clamp(12px, 1.5vw, 14px);
             color: var(--text-color);
             opacity: 0.7;
         }
@@ -268,9 +290,8 @@
             color: var(--text-color);
             line-height: 1.5;
             word-wrap: break-word;
+            font-size: clamp(14px, 2vw, 16px);
         }
-
-        
 
         .footer {
             width: 100%;
@@ -279,12 +300,11 @@
             background: var(--navbar-bg);
             backdrop-filter: blur(10px);
             margin-top: 20px;
-            font-size: 14px;
+            font-size: clamp(12px, 1.5vw, 14px);
             opacity: 0.9;
             box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
         }
 
-        /* Theme toggle switch styles */
         .theme-switch {
             display: flex;
             align-items: center;
@@ -299,7 +319,43 @@
         }
 
         .theme-switch i {
-            font-size: 18px;
+            font-size: clamp(16px, 2.5vw, 18px);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 10px;
+            }
+
+            .nav-links {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                margin: 10px 0;
+            }
+
+            .search-form {
+                order: 2;
+                margin: 10px 0;
+            }
+
+            .user-section {
+                order: 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links {
+                gap: 8px;
+            }
+
+            .nav-links a {
+                padding: 6px 10px;
+            }
+
+            .main-content {
+                padding: 10px;
+            }
         }
     </style>
 </head>
@@ -414,13 +470,6 @@
             icon.classList.add('fa-sun');
             themeToggle.childNodes[1].textContent = ' Light Mode';
         }
-
-
-
-
-
-
-
 
          // Fetch all tweets from the server and display them
          async function fetchTweets() {
