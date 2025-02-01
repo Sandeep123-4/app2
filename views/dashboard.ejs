@@ -489,7 +489,7 @@
               const tweetDate = new Date(tweet.createdAt);
               const formattedDate = tweetDate.toLocaleString(); // Format the date
     
-              tweetElement.innerHTML = `<strong>${tweet.username}</strong>: ${tweet.tweet} <br><small>${formattedDate}</small>`;
+              tweetElement.innerHTML = `<strong style="color: var(--text-color); font-weight: bold;">${tweet.username}</strong>: ${tweet.tweet} <br><small style="color: var(--text-color); font-weight: bold;">${formattedDate}</small>`;
               tweetsContainer.appendChild(tweetElement);
             });
           } catch (error) {
