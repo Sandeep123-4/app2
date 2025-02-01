@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+        :root[data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #141e30, #243b55);
+            --text-color: white;
+            --calendar-bg: rgba(255, 255, 255, 0.1);
+            --day-hover: rgba(255, 255, 255, 0.2);
+            --current-day: #4CAF50;
+            --header-bg: rgba(255, 255, 255, 0.15);
+        }
+
+        :root[data-theme="light"] {
+            --bg-gradient: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            --text-color: #333;
+            --calendar-bg: rgba(255, 255, 255, 0.9);
+            --day-hover: rgba(0, 0, 0, 0.05);
+            --current-day: #4CAF50;
+            --header-bg: rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .calendar-container {
+            background: var(--calendar-bg);
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .calendar-header h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: var(--header-bg);
+            border: none;
+            color: var(--text-color);
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: var(--day-hover);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+
+        .weekday {
+            text-align: center;
+            font-weight: 600;
+            padding: 10px;
+            background: var(--header-bg);
+            border-radius: 8px;
+        }
+
+        .day {
+            aspect-ratio: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 1.1rem;
+        }
+
+        .day:hover {
+            background: var(--day-hover);
+        }
+
+        .current-day {
+            background: var(--current-day);
+            color: white;
+        }
+
+        .other-month {
+            opacity: 0.5;
+        }
+
+        @media (max-width: 600px) {
+            .calendar-container {
+                padding: 15px;
+            }
+
+            .calendar-header h2 {
+                font-size: 1.4rem;
+            }
+
+            .day {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calendar-container">
+        <div class="calendar-header">
+            <h2>January 2025</h2>
+            <div class="calendar-nav">
+                <button class="nav-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="nav-btn">Today</button>
+                <button class="nav-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+        <div class="calendar-grid">
+            <div class="weekday">Sun</div>
+            <div class="weekday">Mon</div>
+            <div class="weekday">Tue</div>
+            <div class="weekday">Wed</div>
+            <div class="weekday">Thu</div>
+            <div class="weekday">Fri</div>
+            <div class="weekday">Sat</div>
+
+            <!-- Previous Month -->
+            <div class="day other-month">29</div>
+            <div class="day other-month">30</div>
+            <div class="day other-month">31</div>
+            
+            <!-- Current Month -->
+            <div class="day">1</div>
+            <div class="day">2</div>
+            <div class="day">3</div>
+            <div class="day">4</div>
+            <div class="day">5</div>
+            <div class="day">6</div>
+            <div class="day">7</div>
+            <div class="day">8</div>
+            <div class="day">9</div>
+            <div class="day">10</div>
+            <div class="day">11</div>
+            <div class="day">12</div>
+            <div class="day">13</div>
+            <div class="day">14</div>
+            <div class="day">15</div>
+            <div class="day">16</div>
+            <div class="day">17</div>
+            <div class="day">18</div>
+            <div class="day">19</div>
+            <div class="day">20</div>
+            <div class="day">21</div>
+            <div class="day">22</div>
+            <div class="day">23</div>
+            <div class="day">24</div>
+            <div class="day">25</div>
+            <div class="day">26</div>
+            <div class="day">27</div>
+            <div class="day">28</div>
+            <div class="day">29</div>
+            <div class="day">30</div>
+            <div class="day current-day">31</div>
+            
+            <!-- Next Month -->
+            <div class="day other-month">1</div>
+        </div>
+    </div>
+
+    <script>
+        // Theme toggle functionality (reusing from dashboard)
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+
+        // Calendar functionality
+        let currentDate = new Date(2025, 0, 31); // January 31, 2025
+        const currentDay = currentDate.getDate();
+        let currentMonth = currentDate.getMonth();
+        let currentYear = currentDate.getFullYear();
+
+        function updateCalendar() {
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                              "July", "August", "September", "October", "November", "December"];
+            
+            document.querySelector('.calendar-header h2').textContent = 
+                `${monthNames[currentMonth]} ${currentYear}`;
+        }
+
+        // Initialize calendar
+        updateCalendar();
+
+        // Add click handlers for navigation buttons
+        document.querySelectorAll('.nav-btn').forEach((btn, index) => {
+            btn.addEventListener('click', function() {
+                if (index === 0) { // Previous month
+                    currentMonth--;
+                    if (currentMonth < 0) {
+                        currentMonth = 11;
+                        currentYear--;
+                    }
+                } else if (index === 1) { // Today
+                    currentDate = new Date(2025, 0, 31); // Reset to January 31, 2025
+                    currentMonth = currentDate.getMonth();
+                    currentYear = currentDate.getFullYear();
+                } else if (index === 2) { // Next month
+                    currentMonth++;
+                    if (currentMonth > 11) {
+                        currentMonth = 0;
+                        currentYear++;
+                    }
+                }
+                updateCalendar();
+            });
+        });
+    </script>
+</body>
+</html>

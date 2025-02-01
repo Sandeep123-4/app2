@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+        
+        :root[data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #141e30, #243b55);
+            --text-color: white;
+            --navbar-bg: rgba(255, 255, 255, 0.2);
+            --content-bg: rgba(255, 255, 255, 0.15);
+            --sidebar-bg: rgba(20, 30, 48, 0.95);
+            --hover-bg: rgba(255, 255, 255, 0.1);
+            --nav-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            --search-bg: rgba(255, 255, 255, 0.1);
+            --search-placeholder: rgba(255, 255, 255, 0.6);
+        }
+
+        :root[data-theme="light"] {
+            --bg-gradient: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            --text-color: #333;
+            --navbar-bg: rgba(255, 255, 255, 0.9);
+            --content-bg: rgba(255, 255, 255, 0.9);
+            --sidebar-bg: rgba(255, 255, 255, 0.95);
+            --hover-bg: rgba(0, 0, 0, 0.05);
+            --nav-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            --search-bg: rgba(0, 0, 0, 0.05);
+            --search-placeholder: rgba(0, 0, 0, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            width: 100%;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--navbar-bg);
+            backdrop-filter: blur(15px);
+            box-shadow: var(--nav-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-title {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #5c67f2, #4a54e1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            letter-spacing: 0.5px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-title:hover {
+            transform: translateY(-1px);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-right: auto;
+            margin-left: 50px;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 16px;
+            padding: 8px 15px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: var(--hover-bg);
+        }
+
+        .search-form {
+            margin-right: 20px;
+        }
+
+        .search-form input {
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: none;
+            background: var(--search-bg);
+            color: var(--text-color);
+            font-size: 14px;
+            width: 250px;
+            transition: width 0.3s ease;
+        }
+
+        .search-form input::placeholder {
+            color: var(--search-placeholder);
+        }
+
+        .search-form input:focus {
+            outline: none;
+            width: 400px;
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 50px;
+            transition: background 0.3s;
+        }
+
+        .user-section:hover {
+            background: var(--hover-bg);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--hover-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .user-info h2 {
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+
+        .user-info p {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .sidebar {
+            position: fixed;
+            right: -300px;
+            top: 0;
+            width: 300px;
+            height: 100vh;
+            background: var(--sidebar-bg);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            transition: right 0.3s ease;
+            z-index: 1000;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar.active {
+            right: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--hover-bg);
+        }
+
+        .close-btn {
+            cursor: pointer;
+            font-size: 20px;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .close-btn:hover {
+            opacity: 1;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 15px;
+        }
+
+        .sidebar-menu a {
+            color: var(--text-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .sidebar-menu a:hover {
+            background: var(--hover-bg);
+        }
+
+        .main-content {
+            width: 100%;
+            margin: 20px auto;
+            padding: 20px;
+            background: var(--content-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 15px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        .tweetscontainer {
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .tweet {
+            background: var(--navbar-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(246, 245, 245, 0.1);
+        }
+
+        .tweet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .tweet-username {
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .tweet-timestamp {
+            font-size: 0.8em;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        .tweet-content {
+            color: var(--text-color);
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+
+        
+
+        .footer {
+            width: 100%;
+            padding: 15px;
+            text-align: center;
+            background: var(--navbar-bg);
+            backdrop-filter: blur(10px);
+            margin-top: 20px;
+            font-size: 14px;
+            opacity: 0.9;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Theme toggle switch styles */
+        .theme-switch {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .theme-switch:hover {
+            background: var(--hover-bg);
+        }
+
+        .theme-switch i {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-title">MyApp</div>
+        <div class="nav-links">
+            <a href="/dashboard"><i class="fas fa-home"></i> Home</a>
+            <a href="/projects"><i class="fas fa-project-diagram"></i> Projects</a>
+            <a href="/messages"><i class="fas fa-envelope"></i> Messages</a>
+            <a href="/analytics"><i class="fas fa-chart-bar"></i> Analytics</a>
+            <a href="/calendar"><i class="fas fa-calendar"></i> Calendar</a>
+            <a href="/tweet"><i class="fas fa-calendar"></i> post</a>
+        </div>
+        <form action="/search" method="GET" class="search-form">
+            <input type="search" name="q" placeholder="Search..." aria-label="Search">
+        </form>
+        <div class="user-section" id="userMenuBtn">
+            <div class="user-info">
+                <h2><%= user %></h2>
+                <p>View Profile</p>
+            </div>
+            <div class="user-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3>Menu</h3>
+            <div class="close-btn" id="closeSidebarBtn">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="/settings"><i class="fas fa-cog"></i> Settings</a></li>
+            <li><a href="#"><i class="fas fa-user-circle"></i> Switch Account</a></li>
+            <li class="theme-switch" id="themeToggle">
+                <i class="fas fa-moon"></i> Dark Mode
+            </li>
+            <li><a href="#"><i class="fas fa-bell"></i> Notifications</a></li>
+            <li><a href="#"><i class="fas fa-shield-alt"></i> Privacy</a></li>
+            <li><a href="#"><i class="fas fa-question-circle"></i> Help & Support</a></li>
+            <li><a href="/logout" style="color: #ff4444;"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+       
+        <h2>All Tweets</h2>
+        <!-- Container to Display Tweets -->
+        <div id="tweetsContainer"></div>
+
+    </div>
+
+    <div class="footer">&copy; 2024 User Dashboard. All Rights Reserved.</div>
+
+    <script>
+        // Sidebar functionality
+        const userMenuBtn = document.getElementById('userMenuBtn');
+        const sidebar = document.getElementById('sidebar');
+        const closeSidebarBtn = document.getElementById('closeSidebarBtn');
+        const themeToggle = document.getElementById('themeToggle');
+
+        userMenuBtn.addEventListener('click', () => {
+            sidebar.classList.add('active');
+        });
+
+        closeSidebarBtn.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+        });
+
+        // Close sidebar when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!sidebar.contains(e.target) && !userMenuBtn.contains(e.target)) {
+                sidebar.classList.remove('active');
+            }
+        });
+
+        // Theme toggle functionality
+        themeToggle.addEventListener('click', () => {
+            const html = document.documentElement;
+            const isDark = html.getAttribute('data-theme') === 'dark';
+            const newTheme = isDark ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            
+            // Update icon and text
+            const icon = themeToggle.querySelector('i');
+            const text = themeToggle.childNodes[1];
+            
+            if (newTheme === 'light') {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                text.textContent = ' Light Mode';
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                text.textContent = ' Dark Mode';
+            }
+
+            // Save theme preference
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // Set initial theme from localStorage
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        if (savedTheme === 'light') {
+            const icon = themeToggle.querySelector('i');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+            themeToggle.childNodes[1].textContent = ' Light Mode';
+        }
+
+
+
+
+
+
+
+
+         // Fetch all tweets from the server and display them
+         async function fetchTweets() {
+          try {
+            const response = await fetch('http://localhost:3000/tweets');
+            const tweets = await response.json();
+    
+            // Clear the previous tweets
+            const tweetsContainer = document.getElementById('tweetsContainer');
+            tweetsContainer.innerHTML = '';
+    
+            // Display each tweet
+            tweets.forEach(tweet => {
+              const tweetElement = document.createElement('div');
+              tweetElement.className = 'tweet';
+              const tweetDate = new Date(tweet.createdAt);
+              const formattedDate = tweetDate.toLocaleString(); // Format the date
+    
+              tweetElement.innerHTML = `<strong>${tweet.username}</strong>: ${tweet.tweet} <br><small>${formattedDate}</small>`;
+              tweetsContainer.appendChild(tweetElement);
+            });
+          } catch (error) {
+            console.error('Error fetching tweets:', error);
+          }
+        }
+    
+        // Call fetchTweets when the page loads to display existing tweets
+        window.onload = fetchTweets;
+    
+        // Handle the form submission to post a new tweet
+        document.getElementById('tweetForm').addEventListener('submit', async (event) => {
+          event.preventDefault();
+    
+          const tweet = document.getElementById('content').value;
+    
+          // Check if content is properly provided
+          if (!tweet) {
+            alert('Please fill in the tweet content!');
+            return;
+          }
+    
+          // Send a POST request to add a new tweet
+          try {
+            const response = await fetch('http://localhost:3000/tweets', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ tweet }),
+            });
+    
+            if (response.ok) {
+              // Clear the input field
+              document.getElementById('content').value = '';
+    
+              // Fetch and display the updated list of tweets
+              fetchTweets();
+            } else {
+              console.error('Failed to post tweet');
+            }
+          } catch (error) {
+            console.error('Error posting tweet:', error);
+          }
+        });
+    </script>
+</body>
+</html>
