@@ -69,6 +69,14 @@ app.get("/dashboard",verifytoken, async(req , res )=>{
     
     res.render("dashboard",{user: username})
 })
+app.get("/UpdateProfile", verifytoken,async(req , res)=>{
+    const user = req.user.id
+    const userDetails = await usermodel.findById(user)
+    const username = userDetails.username
+    const email = userDetails.email
+    
+res.render("update",{username, email})
+})
 
 // User registration endpoint
 app.post("/register", async(req , res)=>{
@@ -88,8 +96,9 @@ app.get("/account",verifytoken, async(req , res)=>{
     const userDetails = await usermodel.findById(user)
     const username = userDetails.username
     const email =userDetails.email
-    const tweets = await tweetmodel.find({email: email}).sort({ createdAt: -1 })
-    res.render("account",{username,email,tweets})
+    const tweets = await tweetmodel.find({email: email}).sort({ createdAt: -1 }).populate('createdAt', 'date')
+    const date = new Date().toLocaleDateString();
+    res.render("account",{username,email,tweets,date})
 })
 
 // User login endpoint
@@ -125,6 +134,12 @@ app.post("/tweets",verifytoken,async(req , res)=>{
     const tweets = new tweetmodel({tweet , username,email})
     await tweets.save()
     return res.redirect("/dashboard")
+})
+app.post("/updateProfile", verifytoken,async(req,res)=>{
+    const{username,email}= req.body
+    const user = req.user.id
+    const updateduser = await usermodel.findByIdAndUpdate(user, { username, email }, { new: true })
+    return res.redirect("/account")
 })
 
 

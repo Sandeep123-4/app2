@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,22 +8,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
         
-        :root[data-theme="dark"] {
-            --bg-gradient: linear-gradient(135deg, #141e30, #243b55);
-            --text-color: white;
-            --content-bg: rgba(255, 255, 255, 0.2);
-            --hover-bg: rgba(255, 255, 255, 0.1);
-            --nav-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-        }
-
-        :root[data-theme="light"] {
-            --bg-gradient: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-            --text-color: #333;
-            --content-bg: rgba(255, 255, 255, 0.9);
-            --hover-bg: rgba(0, 0, 0, 0.05);
-            --nav-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -32,8 +16,8 @@
         }
 
         body {
-            background: var(--bg-gradient);
-            color: var(--text-color);
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            color: #333;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -46,9 +30,9 @@
             justify-content: center;
             padding: 20px;
             gap: 20px;
-            background: var(--content-bg);
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
-            box-shadow: var(--nav-shadow);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .user-profile {
@@ -64,20 +48,20 @@
             height: 100px;
             border-radius: 50%;
             margin-bottom: 10px;
-            border: 2px solid var(--hover-bg);
+            border: 2px solid rgba(0, 0, 0, 0.05);
         }
 
         .user-name {
             font-size: 24px;
             font-weight: 600;
             margin-bottom: 10px;
-            color: var(--text-color);
+            color: #333;
         }
 
         .user-handle {
             font-size: 18px;
             font-weight: 400;
-            color: var(--text-color);
+            color: #333;
         }
 
         .tweets-container {
@@ -95,16 +79,23 @@
             justify-content: center;
             padding: 10px;
             margin: 10px 0;
-            border: 1px solid var(--hover-bg);
+            border: 1px solid rgba(0, 0, 0, 0.05);
             border-radius: 5px;
-            background: var(--content-bg);
-            box-shadow: var(--nav-shadow);
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .tweet-content {
             font-size: 16px;
             font-weight: 400;
-            color: var(--text-color);
+            color: #333;
+        }
+
+        .tweet_date {
+            font-size: 14px;
+            font-weight: 400;
+            color: #333;
+            margin-top: 5px;
         }
 
         @media (max-width: 480px) {
@@ -134,6 +125,14 @@
             .tweet-content {
                 font-size: 14px;
             }
+            
+            .tweet_date {
+                font-size: 12px;
+            }
+            .profile-container a{
+                background-color: #141e30;
+            }
+    
         }
     </style>
 </head>
@@ -146,7 +145,7 @@
         </div>
         <div class="tweets-container">
             <div class="tweet">
-                <p class="tweet-content">Manual Tweet Content</p>
+               <a href="/UpdateProfile" class="tweet-content">update</a>
             </div>
         </div>
     </div>
@@ -154,10 +153,13 @@
     <% tweets.forEach(tweet => { %>
         <div class="tweet">
             <p class="tweet-content"><%= tweet.tweet %></p>
+            <p class="tweet_date"><%= tweet.createdAt.toLocaleDateString() %></p>
         </div>
     <% }); %>
 <% } else { %>
     <p>No tweets found.</p>
 <% } %>
+
+
 </body>
 </html>
