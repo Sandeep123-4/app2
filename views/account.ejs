@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+        
+        :root[data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #141e30, #243b55);
+            --text-color: white;
+            --content-bg: rgba(255, 255, 255, 0.2);
+            --hover-bg: rgba(255, 255, 255, 0.1);
+            --nav-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        :root[data-theme="light"] {
+            --bg-gradient: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            --text-color: #333;
+            --content-bg: rgba(255, 255, 255, 0.9);
+            --hover-bg: rgba(0, 0, 0, 0.05);
+            --nav-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            gap: 20px;
+            background: var(--content-bg);
+            border-radius: 10px;
+            box-shadow: var(--nav-shadow);
+        }
+
+        .user-profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .user-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            border: 2px solid var(--hover-bg);
+        }
+
+        .user-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .user-handle {
+            font-size: 18px;
+            font-weight: 400;
+            color: var(--text-color);
+        }
+
+        .tweets-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .tweet {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid var(--hover-bg);
+            border-radius: 5px;
+            background: var(--content-bg);
+            box-shadow: var(--nav-shadow);
+        }
+
+        .tweet-content {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--text-color);
+        }
+
+        @media (max-width: 480px) {
+            .profile-container {
+                padding: 10px;
+                gap: 10px;
+            }
+            
+            .user-avatar {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .user-name {
+                font-size: 20px;
+            }
+            
+            .user-handle {
+                font-size: 16px;
+            }
+            
+            .tweet {
+                padding: 5px;
+                margin: 5px 0;
+            }
+            
+            .tweet-content {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="user-profile">
+            <img src="/path/to/user/avatar" alt="" class="user-avatar">
+            <h2 class="user-name"><%= username %></h2>
+            <p class="user-handle"><%= email %></p>
+        </div>
+        <div class="tweets-container">
+            <div class="tweet">
+                <p class="tweet-content">Manual Tweet Content</p>
+            </div>
+        </div>
+    </div>
+<% if (tweets) { %>
+    <% tweets.forEach(tweet => { %>
+        <div class="tweet">
+            <p class="tweet-content"><%= tweet.tweet %></p>
+        </div>
+    <% }); %>
+<% } else { %>
+    <p>No tweets found.</p>
+<% } %>
+</body>
+</html>

@@ -83,6 +83,15 @@ app.post("/register", async(req , res)=>{
     return res.redirect("/login")
 })
 
+app.get("/account",verifytoken, async(req , res)=>{
+    const user = req.user.id
+    const userDetails = await usermodel.findById(user)
+    const username = userDetails.username
+    const email =userDetails.email
+    const tweets = await tweetmodel.find({email: email}).sort({ createdAt: -1 })
+    res.render("account",{username,email,tweets})
+})
+
 // User login endpoint
 app.post("/login", async(req , res)=>{
     const{email , password } = req.body
@@ -111,8 +120,9 @@ app.post("/tweets",verifytoken,async(req , res)=>{
     const user = req.user.id
     const userDetails = await usermodel.findById(user)
     const username = userDetails.username
+    const email = userDetails.email
 
-    const tweets = new tweetmodel({tweet , username})
+    const tweets = new tweetmodel({tweet , username,email})
     await tweets.save()
     return res.redirect("/dashboard")
 })
